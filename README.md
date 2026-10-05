@@ -32,5 +32,5 @@ I will be adding the programs, concepts, and problems that I practice while lear
 
 This repository is mainly for **learning, practicing, and improving my Java programming skills**.
 
- Started my Java journey — one program at a time!
->>>>>>> 70d6e34 (Merge branch 'main' of https://github.com/prabhu30-bgm/JavaBeginingBasics)
+ Started My Java journey — one Concept at a time!
+
