@@ -8,7 +8,7 @@ class Payment{
     }
     void card(String bankName, int amount)
     {
-        System.out.println("Ammount Paid "+amount+" Through "+bankName+" Bank");
+        System.out.println("Ammount Paid "+amount+" Through "+bankName+ " Packages");
     }
 }
 

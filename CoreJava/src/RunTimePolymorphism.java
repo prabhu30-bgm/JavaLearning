@@ -24,7 +24,7 @@ class NetBanking extends PaymentMoney
     @Override
     void pay()
     {
-        System.out.println("Ammount Paid "+amount+" Through "+bankName+" Bank");
+        System.out.println("Ammount Paid "+amount+" Through "+bankName+ " Packages");
     }
 }
 
