@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Java DSA Practice ☕
 
 Hi, I'm Basavaprabhu Kudenatti.
