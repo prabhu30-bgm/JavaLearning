@@ -1,0 +1,12 @@
+﻿# Java compiled files
+**/out/
+**/target/
+*.class
+
+# IntelliJ temporary files
+**/.idea/workspace.xml
+**/.idea/shelf/
+**/.idea/tasks.xml
+
+# Log files
+*.log

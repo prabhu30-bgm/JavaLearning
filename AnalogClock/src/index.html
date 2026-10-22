@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="clock">
+
+    <!-- The center dot of the clock -->
+    <div class="center-dot"></div>
+
+    <!-- The Moving Hands -->
+    <div class="hand hour" id="hour-hand"></div>
+    <div class="hand minute" id="minute-hand"></div>
+    <div class="hand second" id="second-hand"></div>
+
+    <!-- Hour Numbers -->
+    <div class="marker twelve">12</div>
+    <div class="marker three">3</div>
+    <div class="marker six">6</div>
+    <div class="marker nine">9</div>
+
+    <!-- Digital Time and Date Display-->
+    <div class="digital-container">
+        <div id="digital-time">00:00:00 PM</div>
+        <div id="date-display">Monday, 01 Jan</div>
+    </div>
+
+</div>
+
+<script>
+    // Select the clock hands and display elements
+    const hourHand = document.getElementById('hour-hand');
+    const minuteHand = document.getElementById('minute-hand');
+    const secondHand = document.getElementById('second-hand');
+    const digitalTimeDisplay = document.getElementById('digital-time');
+    const dateDisplay = document.getElementById('date-display');
+
+    async function updateClockFromBackend() {
+        try {
+            const response = await fetch('http://localhost:8080/api/time');
+            const timeString = await response.text();
+
+            // Set the digital display directly from backend string data
+            digitalTimeDisplay.textContent = timeString;
+
+            // Parse time components for analog sticks
+            const [time, modifier] = timeString.split(' ');
+            let [hours, minutes, seconds] = time.split(':').map(Number);
+
+            if (modifier === 'PM' && hours < 12) hours += 12;
+            if (modifier === 'AM' && hours === 12) hours = 0;
+
+            setHandRotations(hours, minutes, seconds);
+            updateDateDisplay();
+        } catch (error) {
+            console.error('Error fetching time from backend:', error);
+            const now = new Date();
+
+            // Fallback digital clock display logic
+            let fallbackHours = now.getHours();
+            const fallbackMinutes = String(now.getMinutes()).padStart(2, '0');
+            const fallbackSeconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = fallbackHours >= 12 ? 'PM' : 'AM';
+            fallbackHours = fallbackHours % 12 || 12;
+            digitalTimeDisplay.textContent = `${String(fallbackHours).padStart(2, '0')}:${fallbackMinutes}:${fallbackSeconds} ${ampm}`;
+
+            setHandRotations(now.getHours(), now.getMinutes(), now.getSeconds());
+            updateDateDisplay();
+        }
+    }
+
+    function setHandRotations(hours, minutes, seconds) {
+        // Calculate rotation angles (360 degrees in a circle)
+        const secondsDegrees = (seconds / 60) * 360;
+        const minutesDegrees = ((minutes / 60) * 360) + ((seconds / 60) * 6);
+        const hoursDegrees = ((hours % 12) / 12 * 360) + ((minutes / 60) * 30);
+
+        // Applying rotation via CSS transform
+        secondHand.style.transform = `translateX(-50%) rotate(${secondsDegrees}deg)`;
+        minuteHand.style.transform = `translateX(-50%) rotate(${minutesDegrees}deg)`;
+        hourHand.style.transform = `translateX(-50%) rotate(${hoursDegrees}deg)`;
+    }
+
+    // Function to render the Calendar Date
+    function updateDateDisplay() {
+        const now = new Date();
+        const options = { weekday: 'long', day: '2-digit', month: 'short' };
+        // Returns format "Thursday, 22 Oct"
+        dateDisplay.textContent = now.toLocaleDateString('en-US', options);
+    }
+
+    // Run the clock engine every 1 second
+    setInterval(updateClockFromBackend, 1000);
+    updateClockFromBackend();
+</script>
+</body>
+</html>

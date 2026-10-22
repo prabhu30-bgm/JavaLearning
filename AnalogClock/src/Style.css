@@ -1,0 +1,109 @@
+body {
+    background: #6c83b1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* The round clock face */
+.clock {
+    width: 600px;
+    height: 600px;
+    background: #6c83b1;
+    background-image: url('black.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border: 14px solid #000000;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0,0,0,0.4);
+}
+
+
+.center-dot {
+    width: 12px;
+    height: 12px;
+    background: #000000;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.digital-container {
+    position: absolute;
+    bottom: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    z-index: 5;
+}
+
+#digital-time {
+    color: #d53737;
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+#date-display {
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Base style for all sticks (hands) */
+.hand {
+    position: absolute;
+    bottom: 50%; /* Anchor the bottom of the stick at the center of the clock */
+    left: 50%;
+    transform-origin: bottom center; /* Rotate around the bottom point */
+    transform: translateX(-50%);
+    border-radius: 4px;
+}
+
+/* Individual hand specifications */
+.hour {
+    width: 6px;
+    height: 160px;
+    background: #d53737;
+    z-index: 7;
+}
+
+.minute {
+    width: 4px;
+    height: 190px;
+    background: #d53737;
+    z-index: 8;
+}
+
+.second {
+    width: 2px;
+    height: 225px;
+    background: #d53737;
+    z-index: 9;
+}
+
+/* Styling the number markers */
+.marker {
+    position: absolute;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2.5rem; /* Increased slightly to balance the 600px frame size */
+}
+
+/* Positioned exactly 25px away from each outer edge boundary */
+.twelve { top: 25px; left: 50%; transform: translateX(-50%); }
+.three  { right: 25px; top: 50%; transform: translateY(-50%); }
+.six    { bottom: 25px; left: 50%; transform: translateX(-50%); }
+.nine   { left: 25px; top: 50%; transform: translateY(-50%); }
